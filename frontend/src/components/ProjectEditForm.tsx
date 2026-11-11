@@ -2,15 +2,13 @@ import { useState } from "react";
 import type { SubmitEvent } from "react";
 import type { Project } from "../types/project";
 import { updateProject } from "../services/projectService";
-import "../styles/ProjectEditForm.css";
 
 interface Props {
   project: Project;
   onProjectUpdated: (project: Project) => void;
   onCancel: () => void;
 }
-
-export default function ProjectForm({
+export default function ProjectEditForm({
   project,
   onProjectUpdated,
   onCancel,
@@ -20,22 +18,14 @@ export default function ProjectForm({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (loading) return;
-
     setLoading(true);
     setError("");
-
     try {
-      const updatedProject = await updateProject(project.id, {
-        name,
-        description,
-      });
-
-      onProjectUpdated(updatedProject);
-      onCancel();
+      const updated = await updateProject(project.id, { name, description });
+      onProjectUpdated(updated);
     } catch {
       setError("Não foi possível editar o projeto.");
     } finally {
@@ -44,42 +34,53 @@ export default function ProjectForm({
   }
 
   return (
-    <form className="project-edit-form" onSubmit={handleSubmit}>
-      <h2>Editar Projeto</h2>
-
-      <div>
-        <label htmlFor="name">Nome do projeto</label>
+    <form className="ui-form" onSubmit={handleSubmit}>
+      <div className="ui-form__header">
+        <span className="eyebrow">EDITAR PROJETO</span>
+        <h2>Detalhes do projeto</h2>
+        <p>Atualiza as informações e guarda as alterações.</p>
+      </div>
+      <div className="form-field">
+        <label htmlFor="edit-project-name">
+          Nome do projeto <span aria-hidden="true">*</span>
+        </label>
         <input
-          id="name"
+          id="edit-project-name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(event) => setName(event.target.value)}
           required
           maxLength={255}
         />
       </div>
-
-      <div>
-        <label htmlFor="description">Descrição</label>
+      <div className="form-field">
+        <label htmlFor="edit-project-description">Descrição</label>
         <textarea
-          id="description"
+          id="edit-project-description"
+          rows={4}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
         />
       </div>
-
-      {error && <p role="alert">{error}</p>}
-      <div className="project-edit-actions">
-        <button type="submit" className="btn-edit" disabled={loading}>
-          {loading ? "A guardar..." : "Editar projeto"}
-        </button>
-
+      {error && (
+        <p className="form-error" role="alert">
+          {error}
+        </p>
+      )}
+      <div className="form-actions">
         <button
+          className="ui-btn ui-btn--subtle"
           type="button"
-          className="btn-cancel"
+          onClick={onCancel}
           disabled={loading}
-          onClick={() => onCancel()}
         >
           Cancelar
+        </button>
+        <button
+          className="ui-btn ui-btn--primary"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "A guardar…" : "Guardar alterações"}
         </button>
       </div>
     </form>

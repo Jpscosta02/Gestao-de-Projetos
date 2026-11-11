@@ -27,3 +27,7 @@ Route::delete('/projects/{project}', [ProjectController::class,'destroy']);
 Route::get('/projects/{project}/tasks',[TaskController::class,'index']);
 
 Route::post('/projects/{project}/tasks',[TaskController::class,'store']);
+
+Route::put('/projects/{project}/tasks/{task}', [TaskController::class, 'update']);
+
+Route::delete('/projects/{project}/tasks/{task}', [TaskController::class, 'destroy']);

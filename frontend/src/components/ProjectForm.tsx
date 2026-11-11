@@ -2,29 +2,23 @@ import { useState } from "react";
 import type { SubmitEvent } from "react";
 import type { Project } from "../types/project";
 import { createProject } from "../services/projectService";
-import "../styles/ProjectForm.css";
 
 interface Props {
   onProjectCreated: (project: Project) => void;
 }
-
 export default function ProjectForm({ onProjectCreated }: Props) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-
+  async function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (loading) return;
-
     setLoading(true);
     setError("");
-
     try {
       const project = await createProject({ name, description });
-
       onProjectCreated(project);
       setName("");
       setDescription("");
@@ -36,44 +30,49 @@ export default function ProjectForm({ onProjectCreated }: Props) {
   }
 
   return (
-    <form className="project-form" onSubmit={handleSubmit}>
-      <h2>Novo projeto</h2>
-      <p className="form-subtitle">
-        Preenche os dados para começares um novo projeto.
-      </p>
-
-      <div className="form-group">
-        <label htmlFor="name">Nome do projeto</label>
+    <form className="ui-form" onSubmit={handleSubmit}>
+      <div className="ui-form__header">
+        <span className="eyebrow">NOVO REGISTO</span>
+        <h2>Criar projeto</h2>
+        <p>Dá um nome ao projeto e acrescenta uma descrição.</p>
+      </div>
+      <div className="form-field">
+        <label htmlFor="new-project-name">
+          Nome do projeto <span aria-hidden="true">*</span>
+        </label>
         <input
-          id="name"
-          type="text"
-          placeholder="Ex.: Gestor de Tarefas"
+          id="new-project-name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(event) => setName(event.target.value)}
+          placeholder="Ex.: Website pessoal"
           required
           maxLength={255}
         />
       </div>
-
-      <div className="form-group">
-        <label htmlFor="description">Descrição</label>
+      <div className="form-field">
+        <label htmlFor="new-project-description">Descrição</label>
         <textarea
-          id="description"
-          placeholder="Descreve brevemente o teu projeto..."
+          id="new-project-description"
+          rows={3}
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(event) => setDescription(event.target.value)}
+          placeholder="O que pretendes desenvolver?"
         />
       </div>
-
       {error && (
-        <p className='"form-error"' role="alert">
+        <p className="form-error" role="alert">
           {error}
         </p>
       )}
-
-      <button className="btn-create" type="submit" disabled={loading}>
-        {loading ? "A guardar..." : "Criar projeto"}
-      </button>
+      <div className="form-actions">
+        <button
+          className="ui-btn ui-btn--primary"
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "A criar…" : "Criar projeto"}
+        </button>
+      </div>
     </form>
   );
 }
