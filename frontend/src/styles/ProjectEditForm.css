@@ -1,0 +1,55 @@
+
+.project-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.project-edit-form input,
+.project-edit-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.project-edit-form input:focus,
+.project-edit-form textarea:focus {
+    outline: 2px solid #6366f1;
+    border-color: transparent;
+}
+
+.project-edit-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.project-edit-actions button {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-edit {
+    background: #eef2ff;
+    color: #4338ca;
+    border: 1px solid #c7d2fe;
+}
+
+.btn-edit:hover {
+    background: #e0e7ff;
+}
+
+.btn-cancel {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.btn-cancel:hover {
+    background: #fee2e2;
+}
