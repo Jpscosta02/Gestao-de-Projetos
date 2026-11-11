@@ -1,1 +1,15 @@
-/.vscode
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Ficheiros temporários
+*.log
+*.tmp
+*.bak
