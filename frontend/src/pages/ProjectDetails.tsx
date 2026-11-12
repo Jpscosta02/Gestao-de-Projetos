@@ -23,6 +23,8 @@ export default function ProjectDetails({ project }: Props) {
   const [search, setSearch] = useState("");
   type StatusFilter = "all" | "todo" | "in_progress" | "done";
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+  type SortOption = "due_date" | "priority" | "title";
+  const [sortBy, setSortBy] = useState<SortOption>("due_date");
 
   // Estados de carregamento e erros
   const [loading, setLoading] = useState(true);
@@ -137,6 +139,30 @@ export default function ProjectDetails({ project }: Props) {
     return matchesSearch && matchesStatus;
   });
 
+  const priorityOrder = ["low", "normal", "high"];
+
+  const sortedTasks = [...filteredTasks].sort((a, b) => {
+    if (sortBy === "title") {
+      return a.title.localeCompare(b.title);
+    }
+
+    if (sortBy === "priority") {
+      return (
+        priorityOrder.indexOf(b.priority) - priorityOrder.indexOf(a.priority)
+      );
+    }
+
+    if (sortBy === "due_date") {
+      if (!a.due_date && !b.due_date) return 0;
+      if (!a.due_date) return 1;
+      if (!b.due_date) return -1;
+
+      return a.due_date.localeCompare(b.due_date);
+    }
+
+    return 0;
+  });
+
   return (
     <main className="project-details">
       {/* CABEÇALHO */}
@@ -198,6 +224,19 @@ export default function ProjectDetails({ project }: Props) {
               <option value="done">Concluídas</option>
             </select>
           </div>
+          <div className="task-sort">
+            <label htmlFor="sortBy">Ordenar por</label>
+
+            <select
+              id="sortBy"
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as SortOption)}
+            >
+              <option value="due_date">Data-limite</option>
+              <option value="priority">Prioridade</option>
+              <option value="title">Título (A-Z)</option>
+            </select>
+          </div>
         </div>
 
         {/* RESULTADOS */}
@@ -244,7 +283,7 @@ export default function ProjectDetails({ project }: Props) {
           {/* LISTA DE TAREFAS */}
           {!loading && !loadError && filteredTasks.length > 0 && (
             <div className="tasks-list">
-              {filteredTasks.map((task) => (
+              {sortedTasks.map((task) => (
                 <article className="task-card" key={task.id}>
                   {/* CABEÇALHO DO CARTÃO */}
                   <header className="task-card-header">
