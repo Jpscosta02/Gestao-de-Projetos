@@ -31,6 +31,7 @@ export default function ProjectDetails({ project }: Props) {
   const [loadError, setLoadError] = useState("");
   const [deleteError, setDeleteError] = useState("");
   const [deletingTaskId, setDeletingTaskId] = useState<number | null>(null);
+  const [showCreateForm, setShowCreateForm] = useState(false);
 
   // Carregar tarefas sempre que o projeto mudar
   useEffect(() => {
@@ -68,8 +69,9 @@ export default function ProjectDetails({ project }: Props) {
   function handleTaskCreated(newTask: Task) {
     setTasks((current) => [...current, newTask]);
     setLoadError("");
+    setShowCreateForm(false);
   }
-
+  
   // Abrir o modal de edição
   function handleEditTask(task: Task) {
     setEditingTask(task);
@@ -175,11 +177,22 @@ export default function ProjectDetails({ project }: Props) {
   return (
     <main className="project-details">
       {/* CABEÇALHO */}
-      <header className="page-header">
-        <div className="page-header-content">
+      <header className="tasks-page-header">
+        <div className="tasks-page-header__content">
           <h1>Gestão de Tarefas</h1>
           <p>Organiza e acompanha as tarefas dos teus projetos.</p>
         </div>
+
+        <button
+          type="button"
+          className={`task-toggle-btn ${showCreateForm ? "task-toggle-btn--close" : ""}`}
+          aria-expanded={showCreateForm}
+          aria-controls="task-create-panel"
+          onClick={() => setShowCreateForm((current) => !current)}
+        >
+          <span aria-hidden="true">{showCreateForm ? "×" : "+"}</span>
+          {showCreateForm ? "Fechar" : "Nova tarefa"}
+        </button>
       </header>
 
       <div className="progress-section">
@@ -205,13 +218,19 @@ export default function ProjectDetails({ project }: Props) {
       </div>
 
       {/* CRIAÇÃO DE TAREFAS */}
-      <section className="create-section">
-        <TaskForm
-          key={project.id}
-          projectId={project.id}
-          onTaskCreated={handleTaskCreated}
-        />
-      </section>
+      {showCreateForm && (
+        <section
+          id="task-create-panel"
+          className="task-create-panel"
+          aria-label="Criar nova tarefa"
+        >
+          <TaskForm
+            key={project.id}
+            projectId={project.id}
+            onTaskCreated={handleTaskCreated}
+          />
+        </section>
+      )}
 
       {/* GESTÃO DE TAREFAS */}
       <section className="tasks-section">
