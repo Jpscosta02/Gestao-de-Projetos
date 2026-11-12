@@ -163,6 +163,15 @@ export default function ProjectDetails({ project }: Props) {
     return 0;
   });
 
+  const totalTasks = tasks.length;
+
+  const completedTasks = tasks.filter((task) => {
+    return task.status === "done";
+  }).length;
+
+  const progress =
+    totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
   return (
     <main className="project-details">
       {/* CABEÇALHO */}
@@ -172,6 +181,28 @@ export default function ProjectDetails({ project }: Props) {
           <p>Organiza e acompanha as tarefas dos teus projetos.</p>
         </div>
       </header>
+
+      <div className="progress-section">
+        <div className="progress-header">
+          <span>Progresso do projeto</span>
+          <strong>{progress}%</strong>
+        </div>
+
+        <div
+          className="progress-bar"
+          role="progressbar"
+          aria-valuenow={progress}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-label="Progresso do projeto"
+        >
+          <div className="progress-fill" style={{ width: `${progress}%` }} />
+        </div>
+
+        <p>
+          {completedTasks} de {totalTasks} tarefas concluídas
+        </p>
+      </div>
 
       {/* CRIAÇÃO DE TAREFAS */}
       <section className="create-section">

@@ -7,6 +7,38 @@
 }
 
 /* Cabeçalhos */
+.progress-section {
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  height: 12px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #4f46e5;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.progress-section p {
+  margin-bottom: 0;
+  color: #64748b;
+  font-size: 0.875rem;
+}
 
 .project-details .page-header h1 {
   margin: 0 0 8px;
