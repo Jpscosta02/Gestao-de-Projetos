@@ -22,7 +22,7 @@ class TaskController extends Controller
             'description'=> 'nullable|string',
             'due_date' => 'date|nullable',
             'priority' => 'required|in:low,normal,high',
-            'status' => 'required|in:todo,in_progress,done',
+            'status' => 'sometimes|in:todo,in_progress,done',
         ]);
 
         $task = $project->tasks()->create($validated);
