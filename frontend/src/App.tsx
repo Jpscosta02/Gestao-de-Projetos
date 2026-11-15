@@ -1,4 +1,5 @@
 import ProjectsPage from "./pages/ProjectsPage";
+import RegisterPage from "./pages/RegisterPage";
 import { useAuth } from "./context/AuthContext";
 
 function App() {
@@ -10,25 +11,11 @@ function App() {
     error,
   });
 
-  if (loading) {
-    return <p>A verificar autenticação...</p>;
+  if (!user) {
+    return <RegisterPage />;
   }
 
-  if (error) {
-    return <p role="alert">{error}</p>;
-  }
-
-  return (
-    <>
-      <p>
-        {user
-          ? `Sessão iniciada por ${user.name}`
-          : "Nenhum utilizador autenticado"}
-      </p>
-
-      <ProjectsPage />
-    </>
-  );
+  return <ProjectsPage />;
 }
 
 export default App;
