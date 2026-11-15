@@ -31,3 +31,8 @@ Route::post('/projects/{project}/tasks',[TaskController::class,'store']);
 Route::put('/projects/{project}/tasks/{task}', [TaskController::class, 'update']);
 
 Route::delete('/projects/{project}/tasks/{task}', [TaskController::class, 'destroy']);
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    $user = $request->user();
+    return response()->json(['user' => $user]);
+});
