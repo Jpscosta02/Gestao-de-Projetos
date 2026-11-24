@@ -5,6 +5,9 @@ import ProjectForm from "../components/ProjectForm";
 import ProjectEditForm from "../components/ProjectEditForm";
 import ProjectDetails from "./ProjectDetails";
 import "../styles/ProjectsPage.css";
+import { logout } from "../services/authService";
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router";
 
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -17,6 +20,12 @@ export default function ProjectsPage() {
     null,
   );
   const [showCreateForm, setShowCreateForm] = useState(false);
+
+  const { setUser } = useAuth();
+  const navigate = useNavigate();
+
+  const [loggingOut, setLoggingOut] = useState(false);
+  const [logoutError, setLogoutError] = useState("");
 
   useEffect(() => {
     let ignore = false;
@@ -87,6 +96,23 @@ export default function ProjectsPage() {
     }
   }
 
+  async function handleLogout() {
+    if (loggingOut) return;
+
+    setLoggingOut(true);
+    setLogoutError("");
+
+    try {
+      await logout();
+      setUser(null);
+      navigate("/login", { replace: true });
+    } catch {
+      setLogoutError("Não foi possível terminar a sessão.");
+    } finally {
+      setLoggingOut(false);
+    }
+  }
+
   return (
     <main className="app-shell projects-page">
       <div className="app-container">
@@ -101,6 +127,15 @@ export default function ProjectsPage() {
               fazer.
             </p>
           </div>
+          <button
+            className="ui-btn ui-btn--ghost"
+            type="button"
+            onClick={handleLogout}
+            disabled={loggingOut}
+          >
+            {loggingOut ? "A terminar sessão..." : "Terminar sessão"}
+          </button>
+          {logoutError && <p role="alert">{logoutError}</p>}
           <button
             className="ui-btn ui-btn--primary"
             type="button"

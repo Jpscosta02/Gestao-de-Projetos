@@ -1,0 +1,286 @@
+
+/* =========================================
+   PÁGINAS DE AUTENTICAÇÃO
+========================================= */
+
+.auth-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding: 32px 16px;
+  box-sizing: border-box;
+
+  background: #f8fafc;
+}
+
+/* =========================================
+   FORMULÁRIO PRINCIPAL
+========================================= */
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  max-width: 440px;
+
+  padding: 36px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 40px rgba(15, 23, 42, 0.06);
+}
+
+/* =========================================
+   CABEÇALHO
+========================================= */
+
+.auth-form__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+  margin-bottom: 4px;
+
+  text-align: center;
+}
+
+.auth-form__eyebrow {
+  color: #4f46e5;
+
+  font-size: 0.72rem;
+  font-weight: 700;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.auth-form__header h1 {
+  margin: 0;
+
+  color: #0f172a;
+  font-size: 1.75rem;
+  font-weight: 750;
+
+  letter-spacing: -0.03em;
+}
+
+.auth-form__header p {
+  margin: 0;
+  max-width: 340px;
+
+  color: #64748b;
+  font-size: 0.9rem;
+
+  line-height: 1.6;
+}
+
+/* =========================================
+   CONTENTOR DOS CAMPOS
+========================================= */
+
+.auth-form__fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* =========================================
+   CAMPOS
+========================================= */
+
+.auth-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-form__field label {
+  color: #334155;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.auth-form__field input {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 12px 14px;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+
+  color: #0f172a;
+  font: inherit;
+  font-size: 0.9rem;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.auth-form__field input::placeholder {
+  color: #94a3b8;
+}
+
+.auth-form__field input:hover:not(:disabled) {
+  border-color: #94a3b8;
+}
+
+.auth-form__field input:focus {
+  outline: none;
+
+  border-color: #6366f1;
+
+  box-shadow:
+    0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
+.auth-form__field input:disabled {
+  background: #f1f5f9;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   ERROS
+========================================= */
+
+.auth-form__error {
+  margin: 0;
+  padding: 12px 14px;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  color: #b91c1c;
+  font-size: 0.875rem;
+
+  line-height: 1.5;
+}
+
+/* =========================================
+   BOTÃO PRINCIPAL
+========================================= */
+
+.auth-form__submit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 46px;
+
+  padding: 12px 18px;
+
+  box-sizing: border-box;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #4f46e5;
+  color: #ffffff;
+
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.auth-form__submit:hover:not(:disabled) {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.auth-form__submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-form__submit:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 3px;
+}
+
+.auth-form__submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =========================================
+   RODAPÉ
+========================================= */
+
+.auth-form__footer {
+  margin: 0;
+  padding-top: 18px;
+
+  border-top: 1px solid #e2e8f0;
+
+  color: #64748b;
+  font-size: 0.875rem;
+  text-align: center;
+
+  line-height: 1.6;
+}
+
+.auth-form__footer span {
+  color: #4f46e5;
+  font-weight: 650;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 20px 12px;
+  }
+
+  .auth-form {
+    padding: 26px 20px;
+    gap: 20px;
+    border-radius: 14px;
+  }
+
+  .auth-form__header h1 {
+    font-size: 1.5rem;
+  }
+
+  .auth-form__fields {
+    gap: 16px;
+  }
+}
+
+/* =========================================
+   REDUZIR ANIMAÇÕES
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-form__field input,
+  .auth-form__submit {
+    transition: none;
+  }
+}

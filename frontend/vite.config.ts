@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -7,28 +6,45 @@ export default defineConfig({
 
   server: {
     proxy: {
+      // API Laravel
       "/api": {
-        target: "http://127.0.0.1:8000",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
 
+      // Proteção CSRF
       "/sanctum": {
-        target: "http://127.0.0.1:8000",
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
 
-      "/login": {
-        target: "http://127.0.0.1:8000",
+      // Login
+      "^/login$": {
+        target: "http://localhost:8000",
         changeOrigin: true,
+
+        bypass(req) {
+          if (req.method === "GET") {
+            return "/index.html";
+          }
+        },
       },
 
-      "/logout": {
-        target: "http://127.0.0.1:8000",
+      // Registo
+      "^/register$": {
+        target: "http://localhost:8000",
         changeOrigin: true,
+
+        bypass(req) {
+          if (req.method === "GET") {
+            return "/index.html";
+          }
+        },
       },
 
-      "/register": {
-        target: "http://127.0.0.1:8000",
+      // Logout
+      "^/logout$": {
+        target: "http://localhost:8000",
         changeOrigin: true,
       },
     },
